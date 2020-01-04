@@ -28,6 +28,7 @@
         <a href="#/register" class>去注册</a>
       </p>
       <hmbutton @click="login">登录</hmbutton>
+      <van-button type="info">信息按钮</van-button>
     </div>
   </div>
 </template>
@@ -35,6 +36,7 @@
 <script>
 import hmbutton from '@/components/hmbutton.vue'
 import hminput from '@/components/hminput.vue'
+
 export default {
   components: {
     hmbutton,
