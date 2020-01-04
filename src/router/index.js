@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
-// 引入路由所映射的组件
 import Login from '@/views/Login.vue'
+// 引入路由所映射的组件
 Vue.use(VueRouter)
 
 // 创建路由对象

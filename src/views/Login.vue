@@ -15,14 +15,60 @@
         没有账号？
         <a href="#/register" class>去注册</a>
       </p>
-      <div data-v-4bc01e24 class="button">登录按钮</div>
+      <hmbutton @click="login">登录</hmbutton>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+import hmbutton from '@/components/hmbutton.vue'
+export default {
+  components: {
+    hmbutton
+  },
+  methods: {
+    login () {
+      console.log(1111)
+    }
+  }
+
+}
 </script>
 
-<style>
+<style lang='less' scoped>
+.container {
+  padding: 20px;
+}
+
+.close {
+  span {
+    font-size: 27 / 360 * 100vw;
+  }
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+
+  span {
+    display: block;
+    font-size: 126 / 360 * 100vw;
+    color: #d81e06;
+  }
+}
+
+.inputs {
+  input {
+    margin-bottom: 20px;
+  }
+}
+
+.tips {
+  text-align: right;
+  margin-bottom: 20px;
+
+  a {
+    color: #3385ff;
+  }
+}
 </style>
