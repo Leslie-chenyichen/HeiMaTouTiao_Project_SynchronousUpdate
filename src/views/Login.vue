@@ -36,7 +36,7 @@
 <script>
 import hmbutton from '@/components/hmbutton.vue'
 import hminput from '@/components/hminput.vue'
-
+import { login } from '@/apis/user.js'
 export default {
   components: {
     hmbutton,
@@ -53,6 +53,9 @@ export default {
   methods: {
     login () {
       console.log(this.users)
+      login(this.users)
+        .then()
+        .catch()
     },
     handleinput (data) {
       this.users.usersname = data
