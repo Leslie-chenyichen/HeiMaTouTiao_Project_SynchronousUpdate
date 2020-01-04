@@ -32,7 +32,7 @@ export default {
         // console.log(this.msg || '输入不正确')
         this.$toast.fail({
           message: this.msg || '输入不正确',
-          duration: 3000
+          duration: 6000
         })
       }
     }
