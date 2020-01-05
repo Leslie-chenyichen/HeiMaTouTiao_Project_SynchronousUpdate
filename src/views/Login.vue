@@ -28,7 +28,6 @@
         <a href="#/register" class>去注册</a>
       </p>
       <hmbutton @click="login">登录</hmbutton>
-
     </div>
   </div>
 </template>
@@ -37,6 +36,7 @@
 import hmbutton from '@/components/hmbutton.vue'
 import hminput from '@/components/hminput.vue'
 import { login } from '@/apis/user.js'
+
 export default {
   components: {
     hmbutton,
@@ -45,17 +45,16 @@ export default {
   data () {
     return {
       users: {
-        username: 10086,
-        password: 123
+        username: '10086',
+        password: '123'
       }
     }
   },
   methods: {
-    login () {
-      console.log(this.users)
+    async login () {
       login(this.users)
-        .then()
-        .catch()
+      let res = await login(this.users)
+      console.log(res)
     },
     handleinput (data) {
       this.users.usersname = data
