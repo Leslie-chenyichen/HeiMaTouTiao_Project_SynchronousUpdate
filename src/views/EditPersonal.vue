@@ -4,11 +4,12 @@
       <span class="iconfont iconjiantou2" slot="left" @click="$router.back()"></span>
     </hmheader>
     <div class="userimg">
-      <img src="http://127.0.0.1:3000/uploads/image/IMG1569381163794.jpeg" alt="">
-      <hmcell title="昵称" desc='我是谁'></hmcell>
-      <hmcell title="密码" desc='123456'></hmcell>
-      <hmcell title="性别" desc='男'></hmcell>
+      <img src="http://127.0.0.1:3000/uploads/image/leslie_ILove.jpg" alt />
+      <van-uploader :after-read="afterRead" />
     </div>
+    <hmcell title="昵称" desc="我是谁"></hmcell>
+    <hmcell title="密码" desc="123456"></hmcell>
+    <hmcell title="性别" desc="男"></hmcell>
   </div>
 </template>
 
@@ -17,21 +18,42 @@ import hmheader from '@/components/hmheader.vue'
 import hmcell from '@/components/hmcell.vue'
 export default {
   components: {
-    hmheader, hmcell
+    hmheader,
+    hmcell
+  },
+  methods: {
+    afterRead (file) {
+      // 此时可以自行将文件上传至服务器
+      console.log(file)
+    }
   }
 }
 </script>
 
 <style lang='less' scoped>
 .userimg{
-  padding: 20px 0;
-  > img{
-    width:90/360*100vw;
-    height: 90/360*100vw;
-    display: block;
-    margin: 15px auto;
-    border-radius: 50%;
-    background: green;
-  }
+    height: 150px;
+    position: relative;
+    > img {
+        width: 90/360*100vw;
+        height: 90/360*100vw;
+        display: block;
+        border-radius: 50%;
+        position: absolute;
+        left:50%;
+        top:50%;
+        transform: translate(-50%,-50%);
+    }
+    /deep/.van-uploader__upload{
+        width: 90/360*100vw;
+        height: 90/360*100vw;
+    }
+    /deep/.van-uploader{
+        position: absolute;
+        left:50%;
+        top:50%;
+        transform: translate(-50%,-50%);
+        opacity: 0;
+    }
 }
 </style>
