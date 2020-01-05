@@ -59,6 +59,10 @@ export default {
         // 给出用户提示
           this.$toast.fail(res.data.message)
         } else {
+          // 将当前接收的token实现本地存储
+          localStorage.setItem('toutiao_41_token', res.data.data.token)
+          // 为了后期的方便操作的话，就把当前用户数据也存储到本地
+          localStorage.setItem('toutiao_41_userInfo', JSON.stringify(res.data.data.user))
           // 实现页面的跳转
           this.$router.push({ name: 'Persona' })
         }
