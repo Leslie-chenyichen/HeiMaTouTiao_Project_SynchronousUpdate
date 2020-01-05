@@ -16,7 +16,7 @@ let router = new VueRouter({
     },
     {
       name: 'Persona',
-      path: '/persona',
+      path: '/persona/:id',
       component: Persona
     }
   ]

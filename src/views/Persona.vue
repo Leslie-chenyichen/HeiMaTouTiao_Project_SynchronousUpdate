@@ -6,9 +6,9 @@
         <img src="http://img1.imgtn.bdimg.com/it/u=3757784226,1202878475&fm=26&gp=0.jpg" alt />
         <div class="profile-center">
           <div class="name">
-            <span class="iconfont iconxingbienan"></span>我就是我
+            <span class="iconfont iconxingbienan"></span>{{curentUser.nickname}}
           </div>
-          <div class="time">2019-9-24</div>
+          <div class="time">{{curentUser.create_date}}</div>
         </div>
         <span class="iconfont iconjiantou1"></span>
       </div>
@@ -24,9 +24,23 @@
 <script>
 import hmcell from '@/components/hmcell.vue'
 import hmbutton from '@/components/hmbutton'
+import { getUserById } from '@/apis/user.js'
 export default {
   components: {
     hmcell, hmbutton
+  },
+  data () {
+    return {
+      curentUser: {}
+    }
+  },
+  async mounted () {
+    let res = await getUserById(this.$route.params.id)
+    if (res.data.message === '获取成功') {
+      this.curentUser = res.data.data
+    } else if (res.data.message === '用户信息验证失败') {
+      this.$router.push({ name: 'Login' })
+    }
   }
 }
 </script>
@@ -72,6 +86,6 @@ a {
 }
 .btn{
    margin: 20px auto;
-   background-color: red;
+   background-color: #fd0000;
 }
 </style>
