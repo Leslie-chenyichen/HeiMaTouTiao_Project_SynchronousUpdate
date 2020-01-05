@@ -52,9 +52,19 @@ export default {
   },
   methods: {
     async login () {
-      login(this.users)
-      let res = await login(this.users)
-      console.log(res)
+      if (/^(\d{5,6})$|^(1\d{10})$/.test(this.users.username) && /^\S{3,16}$/.test(this.users.password)) {
+        let res = await login(this.users)
+        console.log(res)
+        if (res.data.message === '用户不存在') {
+        // 给出用户提示
+          this.$toast.fail(res.data.message)
+        } else {
+          // 实现页面的跳转
+          this.$router.push({ name: 'Persona' })
+        }
+      } else {
+        this.$toast.fail('用户数据输入不合法')
+      }
     },
     handleinput (data) {
       this.users.usersname = data
