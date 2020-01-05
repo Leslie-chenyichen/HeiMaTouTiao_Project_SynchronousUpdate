@@ -10,8 +10,8 @@ export const login = (data) => {
 // 根据id去获取到用户的详情
 export const getUserById = (id) => {
   return axios({
-    url: `/user/${id}`,
-    headers: { 'Authorization': localStorage.getItem('toutiao_41_token') }
+    url: `/user/${id}`
+    // headers: { 'Authorization': localStorage.getItem('toutiao_41_token') }
   })
 }
 export const updateUserById = (id, data) => {
