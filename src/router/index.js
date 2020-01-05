@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '@/views/Login.vue'
 import Persona from '@/views/Persona.vue'
+import EditPersonal from '@/views/EditPersonal.vue'
 // 引入路由所映射的组件
 Vue.use(VueRouter)
 
@@ -18,6 +19,11 @@ let router = new VueRouter({
       name: 'Persona',
       path: '/persona/:id',
       component: Persona
+    },
+    {
+      name: 'EditPersonal',
+      path: '/editPersonal/:id',
+      component: EditPersonal
     }
   ]
 })

@@ -1,9 +1,10 @@
+
 <template>
   <div class="persona">
-    <router-link to="/edit_profile">
+    <router-link :to="{path:`/editPersonal/${curentUser.id}`}">
       <div class="profile">
         <!-- $axios.defaults.baseURL读取axios的服务器路径 -->
-        <img src="http://img1.imgtn.bdimg.com/it/u=3757784226,1202878475&fm=26&gp=0.jpg" alt />
+        <img :src="curentUser.head_img" alt />
         <div class="profile-center">
           <div class="name">
             <span class="iconfont iconxingbienan"></span>{{curentUser.nickname}}
@@ -38,6 +39,7 @@ export default {
     let res = await getUserById(this.$route.params.id)
     if (res.data.message === '获取成功') {
       this.curentUser = res.data.data
+      this.curentUser.head_img = 'http://127.0.0.1:3000' + this.curentUser.head_img
     } else if (res.data.message === '用户信息验证失败') {
       this.$router.push({ name: 'Login' })
     }
