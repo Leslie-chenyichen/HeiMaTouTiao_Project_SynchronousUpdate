@@ -7,9 +7,9 @@
       <img :src="currentUser.head_img" alt />
       <van-uploader :after-read="afterRead" />
     </div>
-    <hmcell title="昵称" desc="我是谁"></hmcell>
-    <hmcell title="密码" desc="123456"></hmcell>
-    <hmcell title="性别" desc="男"></hmcell>
+    <hmcell title="昵称" :desc='currentUser.nickname'></hmcell>
+    <hmcell title="密码" :desc='currentUser.password' type='password'></hmcell>
+    <hmcell title="性别" :desc='currentUser.gender===0?"女":"男"'></hmcell>
   </div>
 </template>
 
