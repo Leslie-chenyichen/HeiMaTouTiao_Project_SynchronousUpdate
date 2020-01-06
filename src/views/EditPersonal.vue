@@ -7,9 +7,12 @@
       <img :src="currentUser.head_img" alt />
       <van-uploader :after-read="afterRead" />
     </div>
-    <hmcell title="昵称" :desc='currentUser.nickname'></hmcell>
-    <hmcell title="密码" :desc='currentUser.password' type='password'></hmcell>
-    <hmcell title="性别" :desc='currentUser.gender===0?"女":"男"'></hmcell>
+    <hmcell title="昵称" :desc="currentUser.nickname" @click="nickshow=!nickshow"></hmcell>
+    <van-dialog v-model="nickshow" title="修改昵称" show-cancel-button @confirm="updateNickname">
+      <van-field ref="nick"   :value="currentUser.nickname" placeholder="请输入昵称" required label="用户名" />
+    </van-dialog>
+    <hmcell title="密码" :desc="currentUser.password" type="password"></hmcell>
+    <hmcell title="性别" :desc="currentUser.gender===0?'女':'男'"></hmcell>
   </div>
 </template>
 
@@ -26,9 +29,8 @@ export default {
   },
   data () {
     return {
-      currentUser: {
-
-      }
+      currentUser: {},
+      nickshow: false
     }
   },
   async mounted () {
@@ -37,9 +39,11 @@ export default {
     if (res.data.message === '获取成功') {
       this.currentUser = res.data.data
       if (this.currentUser.head_img) {
-        this.currentUser.head_img = 'http://127.0.0.1:3000' + this.currentUser.head_img
+        this.currentUser.head_img =
+          'http://127.0.0.1:3000' + this.currentUser.head_img
       } else {
-        this.currentUser.head_img = 'http://127.0.0.1:3000/uploads/images/default.png'
+        this.currentUser.head_img =
+          'http://127.0.0.1:3000/uploads/images/default.png'
       }
     }
   },
@@ -54,7 +58,8 @@ export default {
       if (res.data.message === '文件上传成功') {
         this.currentUser.head_img = 'http://127.0.0.1:3000' + res.data.data.url
         let res2 = await updateUserById(this.currentUser.id, {
-          head_img: res.data.data.url })
+          head_img: res.data.data.url
+        })
         console.log(res2)
         if (res2.data.message === '修改成功') {
           this.$toast.success('修改成功')
@@ -64,36 +69,39 @@ export default {
       } else {
         this.$toast.fail('文件上传失败')
       }
+    },
+    updateNickname () {
+      // console.log(111111)
+      console.log(this.$refs.nick.$refs.input.value)
     }
   }
 }
-
 </script>
 
 <style lang='less' scoped>
-.userimg{
-    height: 150px;
-    position: relative;
-    > img {
-        width: 90/360*100vw;
-        height: 90/360*100vw;
-        display: block;
-        border-radius: 50%;
-        position: absolute;
-        left:50%;
-        top:50%;
-        transform: translate(-50%,-50%);
-    }
-    /deep/.van-uploader__upload{
-        width: 90/360*100vw;
-        height: 90/360*100vw;
-    }
-    /deep/.van-uploader{
-        position: absolute;
-        left:50%;
-        top:50%;
-        transform: translate(-50%,-50%);
-        opacity: 0;
-    }
+.userimg {
+  height: 150px;
+  position: relative;
+  > img {
+    width: 90/360 * 100vw;
+    height: 90/360 * 100vw;
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  /deep/.van-uploader__upload {
+    width: 90/360 * 100vw;
+    height: 90/360 * 100vw;
+  }
+  /deep/.van-uploader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
 }
 </style>

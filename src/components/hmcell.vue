@@ -1,12 +1,17 @@
 <template>
-  <div class="cell">
+  <div class="cell" @click='handlerclick'>
     <div class="left">{{title}}</div>
     <div class="right">{{type==='password'?"*********" :desc}}<span class="iconfont iconjiantou1"></span></div>
   </div>
 </template>
 <script>
 export default {
-  props: ['title', 'desc', 'type']
+  props: ['title', 'desc', 'type'],
+  methods: {
+    handlerclick (event) {
+      this.$emit('click', event)
+    }
+  }
 }
 </script>
 
