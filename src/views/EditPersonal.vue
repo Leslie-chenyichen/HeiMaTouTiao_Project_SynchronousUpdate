@@ -16,15 +16,20 @@
 <script>
 import hmheader from '@/components/hmheader.vue'
 import hmcell from '@/components/hmcell.vue'
+import { uploaFile } from '@/apis/upload.js'
 export default {
   components: {
     hmheader,
     hmcell
   },
   methods: {
-    afterRead (file) {
+    async afterRead (file) {
       // 此时可以自行将文件上传至服务器
       console.log(file)
+      let formdata = new FormData()
+      formdata.append('file', file.file)
+      let res = await uploaFile(formdata)
+      console.log(res)
     }
   }
 }

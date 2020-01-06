@@ -1,6 +1,9 @@
 <template>
   <div class="header">
-    <div name="left"></div>
+    <!-- <div name="left"></div> -->
+    <div>
+      <slot name="left"></slot>
+    </div>
     <div>{{title}}</div>
     <div name="right"></div>
   </div>
