@@ -4,7 +4,7 @@
       <span class="iconfont iconjiantou2" slot="left" @click="$router.back()"></span>
     </hmheader>
     <div class="userimg">
-      <img src="http://127.0.0.1:3000/uploads/image/leslie_ILove.jpg" alt />
+      <img :src="currentUser.head_img" alt />
       <van-uploader :after-read="afterRead" />
     </div>
     <hmcell title="昵称" desc="我是谁"></hmcell>
@@ -16,11 +16,32 @@
 <script>
 import hmheader from '@/components/hmheader.vue'
 import hmcell from '@/components/hmcell.vue'
+import { getUserById, updateUserById } from '@/apis/user.js'
 import { uploaFile } from '@/apis/upload.js'
+
 export default {
   components: {
     hmheader,
     hmcell
+  },
+  data () {
+    return {
+      currentUser: {
+
+      }
+    }
+  },
+  async mounted () {
+    let res = await getUserById(this.$route.params.id)
+    console.log(res)
+    if (res.data.message === '获取成功') {
+      this.currentUser = res.data.data
+      if (this.currentUser.head_img) {
+        this.currentUser.head_img = 'http://127.0.0.1:3000' + this.currentUser.head_img
+      } else {
+        this.currentUser.head_img = 'http://127.0.0.1:3000/uploads/images/default.png'
+      }
+    }
   },
   methods: {
     async afterRead (file) {
@@ -29,10 +50,24 @@ export default {
       let formdata = new FormData()
       formdata.append('file', file.file)
       let res = await uploaFile(formdata)
-      console.log(res)
+      // console.log(res)
+      if (res.data.message === '文件上传成功') {
+        this.currentUser.head_img = 'http://127.0.0.1:3000' + res.data.data.url
+        let res2 = await updateUserById(this.currentUser.id, {
+          head_img: res.data.data.url })
+        console.log(res2)
+        if (res2.data.message === '修改成功') {
+          this.$toast.success('修改成功')
+        } else {
+          this.$toast.success('修改失败')
+        }
+      } else {
+        this.$toast.fail('文件上传失败')
+      }
     }
   }
 }
+
 </script>
 
 <style lang='less' scoped>
