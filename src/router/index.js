@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '@/views/Login.vue'
 import Persona from '@/views/Persona.vue'
 import EditPersonal from '@/views/EditPersonal.vue'
+import Index from '@/views/Index.vue'
 // 引入路由所映射的组件
 Vue.use(VueRouter)
 
@@ -10,6 +11,11 @@ Vue.use(VueRouter)
 let router = new VueRouter({
   // 配置路由
   routes: [
+    {
+      name: 'Index',
+      path: '/',
+      component: Index
+    },
     {
       name: 'Login',
       path: '/login',

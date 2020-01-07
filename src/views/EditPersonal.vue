@@ -89,7 +89,7 @@ export default {
     // 用户名
     async updateNickname () {
       let name = this.$refs.nick.$refs.input.value
-      // 更新
+      // 更新密码
       let res = await updateUserById(this.currentUser.id, { nickname: name })
       if (res.data.message === '修复成功') {
         this.currenUser.nickname = name
@@ -130,8 +130,16 @@ export default {
       }
     },
     // 修改性别
-    updateGender () {
-      console.log(this.gender)
+    async updateGender () {
+      // console.log(this.gender)
+      // 更新性别
+      let res = await updateUserById(this.currentUser.id, { gender: this.gender })
+      if (res.data.message === '修复成功') {
+        this.currenUser.gender = this.gender
+        this.$toast.success('修改成功')
+      } else {
+        this.$toast.fail('修改失败')
+      }
     },
     onChange (picker, value, index) {
       console.log(this.currentUser.gender)
