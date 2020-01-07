@@ -24,7 +24,7 @@
         ></hminput>
       </div>
       <p class="tips">
-        没有账号？
+        有没有账号啊？
         <a href="#/register" class>去注册</a>
       </p>
       <hmbutton @click="login">登录</hmbutton>

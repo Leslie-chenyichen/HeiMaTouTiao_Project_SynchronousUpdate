@@ -27,10 +27,10 @@
           v-model="users.nickname"></hminput>
       </div>
       <p class="tips">
-        已有账号？
+        已有账号了吗？
         <a href="#/login" class>去登录</a>
       </p>
-      <hmbutton @click="register">登录</hmbutton>
+      <hmbutton @click="register">注册</hmbutton>
     </div>
   </div>
 </template>
@@ -38,7 +38,7 @@
 <script>
 import hmbutton from '@/components/hmbutton.vue'
 import hminput from '@/components/hminput.vue'
-// import { register } from '@apis/user.js'
+import { register } from '@/apis/user.js'
 
 export default {
   components: {
@@ -51,6 +51,18 @@ export default {
         username: '',
         password: '',
         nickname: ''
+      }
+    }
+  },
+  methods: {
+    async register () {
+      let res = await register(this.users)
+      console.log(res)
+      if (res.data.message === '注册成功') {
+        this.$toast.success('注册成功')
+        this.$router.push({ name: 'Login' })
+      } else {
+        this.$toast.success('注册失败')
       }
     }
   }

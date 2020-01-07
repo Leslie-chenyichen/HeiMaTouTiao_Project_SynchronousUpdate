@@ -22,3 +22,11 @@ export const updateUserById = (id, data) => {
     data
   })
 }
+// 4.实现用户的注册、后台是post的请求
+export const register = (data) => {
+  return axios({
+    method: 'post',
+    url: '/register',
+    data
+  })
+}
