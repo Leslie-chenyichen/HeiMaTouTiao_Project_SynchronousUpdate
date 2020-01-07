@@ -1,3 +1,4 @@
+<!-- 唉，请注意看好了：当前是Lonin.vue登录展示页面 -->
 <template>
   <div class="login">
     <div class="container">
@@ -45,8 +46,8 @@ export default {
   data () {
     return {
       users: {
-        username: '100868',
-        password: '123'
+        username: '10086810010',
+        password: '123456'
       }
     }
   },

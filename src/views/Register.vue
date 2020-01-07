@@ -1,4 +1,4 @@
-<template>
+<!-- 唉，请注意看好了：当前是Register.vue---注册展示页面 --><template>
   <div class="login">
     <div class="container">
       <div class="close">

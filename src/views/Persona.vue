@@ -1,4 +1,4 @@
-
+<!-- 唉，请注意看好了：当前是Persona.vue---用户信息展示页面 -->
 <template>
   <div class="persona">
     <router-link :to="{path:`/editPersonal/${curentUser.id}`}">
