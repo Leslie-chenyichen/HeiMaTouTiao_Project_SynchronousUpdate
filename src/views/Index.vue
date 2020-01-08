@@ -19,14 +19,16 @@
     </div>
     <!-- 这里是标签页的结构 v-model="active" sticky -->
     <div class="nav">
-      <van-tabs v-model="active" sticky swipeable>
+      <van-tabs v-model="active" sticky swipeable @change="hmchange">
         <van-tab :title="cate.name" v-for="cate in cateList" :key="cate.id">
           <hmarticleblock v-for="item in cate.postList" :key="item.id" :post="item"></hmarticleblock>
         </van-tab>
       </van-tabs>
     </div>
     <!-- 这里是新闻列表的结构 -->
-    <div class="newList"></div>
+    <div class="newList">
+
+    </div>
   </div>
 </template>
 
@@ -41,6 +43,12 @@ export default {
       active: 1,
       cateList: []
 
+    }
+  },
+  watch: {
+    active () {
+      // console.log(this.active)
+      if (this.cateList[this.active].postList.length === 0) { this.init() }
     }
   },
   components: {
@@ -60,12 +68,12 @@ export default {
       return {
         ...value, // 这个是展示所有的对象，要拿到这个对象的所有的成员
         postList: [], // 这个是栏目的新闻列表数据
-        pageSize: 8, // 这个是栏目每页所显示的记录数
+        pageSize: 20, // 这个是栏目每页所显示的记录数
         pageIndex: 1 // 这个是栏目当前的页码
       }
     })
+    console.log(this.cateList)
     this.init()
-    // console.log(this.cateList1)
   },
   methods: {
     async init () {
@@ -74,10 +82,14 @@ export default {
         pageIndex: this.cateList[this.active].pageIndex,
         crtegory: this.cateList[this.active].id
       })
+      console.log(res2)
       // 将数据存储到当前栏目的postList中
       this.cateList[this.active].postList = res2.data.data
+    },
+    hmchange (title, nickname) {
+      // console.log(title, nickname)
+      console.log(this.active)
     }
-
   }
 }
 </script>
