@@ -47,6 +47,7 @@
 
 <script>
 import { getCateList } from '@/apis/cate.js'
+import { getPostList } from '@/apis/arctile.js'
 export default {
   data () {
     return {
@@ -62,8 +63,28 @@ export default {
 
     // 获取所有栏目数据
     let res = await getCateList()
-    console.log(res)
+    // console.log(res)
     this.cateList = res.data.data
+    // console.log(res)
+    // 这个是对数据的改造
+    this.cateList = this.cateList.map(value => {
+      return {
+        ...value, // 这个是展示所有的对象，要拿到这个对象的所有的成员
+        postList: [], // 这个是栏目的新闻列表数据
+        pageSize: 10, // 这个是栏目每页所显示的记录数
+        pageIndex: 1 // 这个是栏目当前的页码
+      }
+    })
+    this.init()
+    // console.log(this.cateList1)
+
+    let res2 = await getPostList({
+      pageSize: this.cateList[this.active].pageSize, // [this.active]为当前的栏目
+      pageIndex: this.cateList[this.active].pageIndex,
+      crtegory: this.cateList[this.active].id
+    })
+    // 将数据存储到当前栏目的postList中
+    this.cateList[this.active].postList = res2.data.data
   }
 }
 </script>
