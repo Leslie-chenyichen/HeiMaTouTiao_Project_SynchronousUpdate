@@ -23,17 +23,21 @@
         <van-tab title="关注">内容 1</van-tab>
         <van-tab title="推荐">内容 2</van-tab>
         <van-tab title="黑马视频">内容 3</van-tab>
-        <van-tab title="热点">内容 4</van-tab>
-        <van-tab title="直播">内容 5</van-tab>
-        <van-tab title="图片">内容 6</van-tab>
-        <van-tab title="科技">内容 7</van-tab>
-        <van-tab title="娱乐">内容 8</van-tab>
-        <van-tab title="游戏">内容 9</van-tab>
-        <van-tab title="体育">内容 10</van-tab>
-        <van-tab title="懂车帝">内容 11</van-tab>
+        <van-tab title="段子">内容 4</van-tab>
+        <van-tab title="时尚">内容 5</van-tab>
+        <van-tab title="游戏">内容 6</van-tab>
+        <van-tab title="教育">内容 7</van-tab>
+        <van-tab title="健康">内容 8</van-tab>
+        <van-tab title="旅游">内容 9</van-tab>
+        <van-tab title="房产">内容 10</van-tab>
+        <van-tab title="体育">内容 11</van-tab>
         <van-tab title="财经">内容 12</van-tab>
-        <van-tab title="搞笑">内容 13</van-tab>
-        <van-tab title="更多">内容 14</van-tab>
+        <van-tab title="汽车">内容 13</van-tab>
+        <van-tab title="男人">内容 14</van-tab>
+        <van-tab title="军事">内容 15</van-tab>
+        <van-tab title="科技">内容 16</van-tab>
+        <van-tab title="手机">内容 17</van-tab>
+        <van-tab title="女人">内容 18</van-tab>
       </van-tabs>
     </div>
     <!-- 这里是新闻列表的结构 -->
@@ -42,17 +46,24 @@
 </template>
 
 <script>
+import { getCateList } from '@/apis/cate.js'
 export default {
   data () {
     return {
       id: '',
-      active: 1
+      active: 1,
+      cateList: []
+
     }
   },
-  mounted () {
-    this.id = JSON.parse(
-      localStorage.getItem('toutiao_41_userInfo' || '{}')
-    ).id
+  async mounted () {
+    // 获取用户id
+    this.id = JSON.parse(localStorage.getItem('toutiao_41_userInfo') || '{}').id
+
+    // 获取所有栏目数据
+    let res = await getCateList()
+    console.log(res)
+    this.cateList = res.data.data
   }
 }
 </script>

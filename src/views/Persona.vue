@@ -16,15 +16,15 @@
       <hmcell title="我的关注" desc="关注的用户"></hmcell>
       <hmcell title="我的跟帖" desc="跟帖/回复"></hmcell>
       <hmcell title="我的收藏" desc="文章/视频"></hmcell>
-      <hmcell title="设置"></hmcell>
-      <hmbutton class="btn" @click="exit">退出</hmbutton >
+      <!-- <hmcell title="设置"></hmcell> -->
     </router-link>
+      <hmbutton @click="exit">退出</hmbutton >
   </div>
 </template>
 
 <script>
 import hmcell from '@/components/hmcell.vue'
-import hmbutton from '@/components/hmbutton'
+import hmbutton from '@/components/hmbutton.vue'
 import { getUserById } from '@/apis/user.js'
 export default {
   components: {

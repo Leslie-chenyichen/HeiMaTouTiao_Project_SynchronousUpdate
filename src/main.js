@@ -1,3 +1,4 @@
+/*  唉，请注意看好了：当前是main.js---所有入口的文件 */
 import Vue from 'vue'
 import App from './App.vue'
 import router from '@/router/index.js'
