@@ -4,17 +4,16 @@
       <p class="content">{{post.title}}</p>
       <p class="info">
         <span>{{post.user.nickname}}</span>
-        <span>{{post.comment_length}}跟贴</span>
+        <span>{{post.comment_length}}跟帖</span>
       </p>
     </div>
     <img :src="post.cover[0].url" alt />
-
   </div>
 </template>
 
 <script>
 export default {
-  propt: ['post']
+  props: ['post']
 }
 </script>
 

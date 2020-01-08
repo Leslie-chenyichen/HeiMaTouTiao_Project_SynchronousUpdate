@@ -17,27 +17,12 @@
         <van-icon name="manager-o" />
       </div>
     </div>
-    <!-- 这里是标签页的结构 -->
+    <!-- 这里是标签页的结构 v-model="active" sticky -->
     <div class="nav">
       <van-tabs v-model="active" sticky swipeable>
-        <van-tab title="关注">内容 1</van-tab>
-        <van-tab title="推荐">内容 2</van-tab>
-        <van-tab title="黑马视频">内容 3</van-tab>
-        <van-tab title="段子">内容 4</van-tab>
-        <van-tab title="时尚">内容 5</van-tab>
-        <van-tab title="游戏">内容 6</van-tab>
-        <van-tab title="教育">内容 7</van-tab>
-        <van-tab title="健康">内容 8</van-tab>
-        <van-tab title="旅游">内容 9</van-tab>
-        <van-tab title="房产">内容 10</van-tab>
-        <van-tab title="体育">内容 11</van-tab>
-        <van-tab title="财经">内容 12</van-tab>
-        <van-tab title="汽车">内容 13</van-tab>
-        <van-tab title="男人">内容 14</van-tab>
-        <van-tab title="军事">内容 15</van-tab>
-        <van-tab title="科技">内容 16</van-tab>
-        <van-tab title="手机">内容 17</van-tab>
-        <van-tab title="女人">内容 18</van-tab>
+        <van-tab :title="cate.name" v-for="cate in cateList" :key="cate.id">
+          <hmarticleblock v-for="item in cate.postList" :key="item.id" :post="item"></hmarticleblock>
+        </van-tab>
       </van-tabs>
     </div>
     <!-- 这里是新闻列表的结构 -->
@@ -48,6 +33,7 @@
 <script>
 import { getCateList } from '@/apis/cate.js'
 import { getPostList } from '@/apis/arctile.js'
+import hmarticleblock from '@/components/hmarticleBlock.vue'
 export default {
   data () {
     return {
@@ -56,6 +42,9 @@ export default {
       cateList: []
 
     }
+  },
+  components: {
+    hmarticleblock
   },
   async mounted () {
     // 获取用户id
@@ -71,20 +60,24 @@ export default {
       return {
         ...value, // 这个是展示所有的对象，要拿到这个对象的所有的成员
         postList: [], // 这个是栏目的新闻列表数据
-        pageSize: 10, // 这个是栏目每页所显示的记录数
+        pageSize: 8, // 这个是栏目每页所显示的记录数
         pageIndex: 1 // 这个是栏目当前的页码
       }
     })
     this.init()
     // console.log(this.cateList1)
+  },
+  methods: {
+    async init () {
+      let res2 = await getPostList({
+        pageSize: this.cateList[this.active].pageSize, // [this.active]为当前的栏目
+        pageIndex: this.cateList[this.active].pageIndex,
+        crtegory: this.cateList[this.active].id
+      })
+      // 将数据存储到当前栏目的postList中
+      this.cateList[this.active].postList = res2.data.data
+    }
 
-    let res2 = await getPostList({
-      pageSize: this.cateList[this.active].pageSize, // [this.active]为当前的栏目
-      pageIndex: this.cateList[this.active].pageIndex,
-      crtegory: this.cateList[this.active].id
-    })
-    // 将数据存储到当前栏目的postList中
-    this.cateList[this.active].postList = res2.data.data
   }
 }
 </script>
