@@ -47,7 +47,7 @@ export default {
   },
   watch: {
     active () {
-      // console.log(this.active)
+      console.log(this.active)
       if (this.cateList[this.active].postList.length === 0) { this.init() }
     }
   },
