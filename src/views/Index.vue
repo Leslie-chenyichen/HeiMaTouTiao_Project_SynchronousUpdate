@@ -8,37 +8,33 @@
         <span class="iconfont iconnew"></span>
       </div>
       <!-- 搜索区域 -->
-      <div class="search" @click="$router.push({name:'Search'})">
+      <div class="search" @click="$router.push({ name: 'Search' })">
         <van-icon name="search" />
         <span>搜索你想要的商品</span>
       </div>
       <!-- 用户头像区域 -->
-      <div class="user" @click="$router.push({path:`/personal/${id}`})">
+      <div class="user" @click="$router.push({ path: `/personal/${id}` })">
         <van-icon name="manager-o" />
       </div>
     </div>
     <!-- 这里是标签页的结构 v-model="active" sticky -->
-    <div class="nav">
-      <van-tabs v-model="active" sticky swipeable @change="hmchange">
+ <div class="nav">
+      <!-- 整个标签页 -->
+      <van-tabs v-model="active" sticky swipeable>
+        <!-- 单击标签项及内容面板 -->
+        <!-- 生成栏目数据 -->
         <van-tab :title="cate.name" v-for="cate in cateList" :key="cate.id">
-          <hmarticleblock v-for="item in cate.postList" :key="item.id" :post="item"></hmarticleblock>
+          <van-list v-model="cate.loading" :finished="cate.finished" finished-text="没有更多了"  @load="onLoad"
+            :immediate-check="false" :offset="10">
+            <van-pull-refresh v-model="cate.isLoading" @refresh="onRefresh">
+              <!-- 生成当前栏目的文章列表数据 -->
+              <hmarticleblock v-for="item in cate.postList" :key="item.id" :post="item" @click="$router.push({path:`/articleDetail/${item.id}`})"></hmarticleblock>
+            </van-pull-refresh>
+          </van-list>
         </van-tab>
       </van-tabs>
-    </div>
-    <!-- 这里是上拉的数据正在加载的效果的结果 -->
-    <van-list
-      v-model="cateList.loading"
-      :finished="cateList.finished"
-      finished-text="没有更多的数据了"
-      @load="onLoad"
-      :immediate-check="false"
-      :offset="10"
-    >
-      <!-- <hmarticleblock v-for="item in cate.postList" :key="item.id" :post="item"></hmarticleblock> -->
-      <!-- 这里是新闻列表的结构 -->
-      <div class="newList"></div>
-    </van-list>
   </div>
+</div>
 </template>
 
 <script>
@@ -80,16 +76,41 @@ export default {
       return {
         ...value, // 这个是展示所有的对象，要拿到这个对象的所有的成员
         postList: [], // 这个是栏目的新闻列表数据
-        pageSize: 20, // 这个是栏目每页所显示的记录数
+        pageSize: 10, // 这个是栏目每页所显示的记录数
         pageIndex: 1, // 这个是栏目当前的页码
         loading: false, // 这个是发起异步的的时候更的数据
-        finished: false // 这个数据全部已加载完毕了
+        finished: false, // 这个数据全部已加载完毕了
+        isLoading: false // 这个是正在加载中的的
       }
     })
     console.log(this.cateList)
     this.init()
   },
   methods: {
+    // 注意了！！！methods方法是必须有一一定的触发条件下才能执行
+    // 下拉加载下面的内容
+    onRefresh () {
+      this.cateList[this.active].pageIndex = 1
+      // 清空了当前的数据
+      this.cateList[this.active].postList.length = 0
+      // 这里是发异步的请求
+      setTimeout(() => {
+        this.init()
+      }, 2000)
+      console.log('111111')
+      // 然后这里就可以重置它的
+      this.cateList[this.active].isLoading = false
+    },
+    onLoad () {
+      // 重置页面，让页码回到第1页去
+      if (this.cateList[this.active].isLoading === false) {
+        this.cateList[this.active].pageIndex++
+        setTimeout(() => {
+          this.init()
+        }, 2000)// 10毫秒为onLoad加载缓冲的时间
+      }
+    },
+
     async init () {
       let res2 = await getPostList({
         pageSize: this.cateList[this.active].pageSize, // [this.active]为当前的栏目
@@ -99,19 +120,25 @@ export default {
       console.log(res2)
       // 将数据存储到当前栏目的postList中
       this.cateList[this.active].postList = res2.data.data
+      // 这里是更新数据
+      this.cateList[this.active].loading = false
+      // 进行判断，如果当前数据的长度小于当前数据栏目，就让它自动地加载
+      if (res2.data.data.length < this.cateList[this.active].pageSize) {
+        // 将当前的数据存到这个当前的这个pageSize的栏目中去
+        this.cateList[this.active].postList.push(...res2.data.data)
+      }
     },
     hmchange (title, nickname) {
       // console.log(title, nickname)
       console.log(this.active)
-    },
-    onLoad () {
-      //
     }
+
   }
 }
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
+/* 这里的这个是index的样式 */
 .header {
   width: 100%;
   height: 50px;
@@ -132,7 +159,7 @@ export default {
   }
   .search {
     height: 40px;
-    border-radius: 20px;
+    border-radius: 10;
     flex: 1;
     background-color: rgba(255, 255, 255, 0.4);
     text-align: center;
