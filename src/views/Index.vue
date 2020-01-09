@@ -45,7 +45,7 @@ export default {
   data () {
     return {
       id: '',
-      active: 1,
+      active: localStorage.getItem('toutiao_41_token') ? 1 : 0,
       cateList: []
     }
   },
@@ -97,7 +97,7 @@ export default {
       setTimeout(() => {
         this.init()
       }, 2000)
-      console.log('111111')
+
       // 然后这里就可以重置它的
       this.cateList[this.active].isLoading = false
     },
@@ -107,32 +107,30 @@ export default {
         this.cateList[this.active].pageIndex++
         setTimeout(() => {
           this.init()
-        }, 2000)// 10毫秒为onLoad加载缓冲的时间
+        }, 2000)// 加载缓冲的时间
       }
     },
 
     async init () {
+      let id = this.cateList[this.active].id
       let res2 = await getPostList({
-        pageSize: this.cateList[this.active].pageSize, // [this.active]为当前的栏目
+        pageSize: this.cateList[this.active].pageSize,
         pageIndex: this.cateList[this.active].pageIndex,
-        crtegory: this.cateList[this.active].id
+        crtegory: id
       })
-      console.log(res2)
-      // 将数据存储到当前栏目的postList中
-      this.cateList[this.active].postList = res2.data.data
-      // 这里是更新数据
-      this.cateList[this.active].loading = false
-      // 进行判断，如果当前数据的长度小于当前数据栏目，就让它自动地加载
-      if (res2.data.data.length < this.cateList[this.active].pageSize) {
-        // 将当前的数据存到这个当前的这个pageSize的栏目中去
-        this.cateList[this.active].postList.push(...res2.data.data)
+      if (this.cateList[this.active].loading) {
+        this.cateList[this.active].loading = false
       }
-    },
-    hmchange (title, nickname) {
-      // console.log(title, nickname)
-      console.log(this.active)
+      if (this.cateList[this.active].isLoading) {
+        this.cateList[this.active].isLoading = false
+      }
+      // console.log(res2.data)
+      if (res2.data.data.length < this.cateList[this.active].pageSize) {
+        this.cateList[this.active].finished = true
+      }
+      // 将数据存储到当前栏目的postList中
+      this.cateList[this.active].postList.push(...res2.data.data)
     }
-
   }
 }
 </script>
