@@ -5,6 +5,7 @@ import Persona from '@/views/Persona.vue'
 import EditPersonal from '@/views/EditPersonal.vue'
 import Index from '@/views/Index.vue'
 import Register from '@/views/Register.vue'
+import ArticleDetail from '@/views/ArticleDetail.vue'
 // 引入路由所映射的组件
 Vue.use(VueRouter)
 
@@ -26,6 +27,11 @@ let router = new VueRouter({
       name: 'Login',
       path: '/login',
       component: Login
+    },
+    {
+      name: 'ArticleDetail',
+      path: '/articleDetail/:id',
+      component: ArticleDetail
     },
     {
       name: 'Persona',
