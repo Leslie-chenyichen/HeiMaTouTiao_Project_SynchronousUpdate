@@ -5,7 +5,7 @@
         <van-icon name="arrow-left back" @click="$router.back()" />
         <span class="iconfont iconnew new"></span>
       </div>
-      <span>关注</span>
+      <span :class="{active:article.has_follow}"  @click="followThisUser">{{article.has_follow?'已关注':'关注'}}</span>
     </div>
     <div class="detail">
       <div class="title">{{article.title}}</div>
@@ -14,13 +14,12 @@
         <span>{{article.create_date}}</span>
       </div>
       <div class="content" v-html='article.content' v-if="article.type ===1"></div>
-        <!-- <video :src="article.content" v-if="article.type ===2"></video> -->
-         <video :src="article.content" v-if='article.type===2' controls></video>
-        <!-- {{article.content}} -->
 
+         <video :src="article.content" v-if='article.type===2' controls></video>
       <div class="opt">
-        <span class="like">
-          <van-icon name="good-job-o" />点个赞
+          <!-- 这里是点zan  @click="likeThisArticle"-->
+         <span class="like" :class="{active:article.has_like}" >
+          <van-icon name="good-job-o" />{{article.like_length}}
         </span>
         <span class="chat">
           <van-icon name="chat" class="w" />微信
@@ -48,11 +47,12 @@
 
 <script>
 import { getArticleById } from '@/apis/arctile.js'
+import { followUser, unfollowUser } from '@/apis/user.js'
 export default {
   data () {
     return {
       article: {
-
+        user: ''
       }
     }
   },
@@ -61,6 +61,20 @@ export default {
     let res = await getArticleById(this.$route.params.id)
     console.log(res)
     this.article = res.data.data
+  },
+  methods: {
+    async followThisUser () {
+      let res
+      if (this.article.has_follw) {
+        res = await unfollowUser(this.article.user.id)
+      } else {
+        res = await followUser(this.article.user.id)
+      }
+      console.log(res)
+      // 刷新一下那个关注
+      this.article.has_follow = !this.article.has_follow
+      this.$toast.success(res.data.message)
+    }
   }
 }
 </script>
@@ -89,11 +103,14 @@ export default {
   }
   > span {
     padding: 5px 15px;
-    background-color: #f00;
-    color: #fff;
     text-align: center;
+    border:1px solid #ccc;
     border-radius: 15px;
     font-size: 13px;
+    &.active{
+      color:#fff;
+      background-color: #f00;
+    }
   }
 }
 .detail {
@@ -114,19 +131,19 @@ export default {
     font-size: 15px;
     padding-bottom: 30px;
     width: 100%;
-    /deep/.photo{
-        img{
-        width:100%;
+    /deep/.photo {
+      img {
+        width: 100%;
         display: block;
-        }
+      }
     }
   }
   video{
-        background: yellow;
-        width: 100%;
-    }
+    width: 100%;
+  }
 }
 .opt {
+  margin-top: 10px;
   display: flex;
   justify-content: space-around;
   .like,
@@ -138,6 +155,11 @@ export default {
     text-align: center;
     border: 1px solid #ccc;
     border-radius: 15px;
+  }
+  .like{
+    &.active{
+      color:red;
+    }
   }
   .w {
     color: rgb(84, 163, 5);
