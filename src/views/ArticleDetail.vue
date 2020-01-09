@@ -10,12 +10,14 @@
     <div class="detail">
       <div class="title">{{article.title}}</div>
       <div class="desc">
-        <span>{{article.user.nickname}}</span> &nbsp;&nbsp;
+        <span>{{article.user && article.user.nickname}}</span> &nbsp;&nbsp;
         <span>{{article.create_date}}</span>
       </div>
-      <div class="content" v-html='article.content'>
-        {{article.content}}
-      </div>
+      <div class="content" v-html='article.content' v-if="article.type ===1"></div>
+        <!-- <video :src="article.content" v-if="article.type ===2"></video> -->
+         <video :src="article.content" v-if='article.type===2' controls></video>
+        <!-- {{article.content}} -->
+
       <div class="opt">
         <span class="like">
           <van-icon name="good-job-o" />点个赞
@@ -114,11 +116,15 @@ export default {
     width: 100%;
     /deep/.photo{
         img{
-            width:100%;
+        width:100%;
         display: block;
         }
     }
   }
+  video{
+        background: yellow;
+        width: 100%;
+    }
 }
 .opt {
   display: flex;
