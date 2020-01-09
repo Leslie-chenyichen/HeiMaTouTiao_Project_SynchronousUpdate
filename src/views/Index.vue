@@ -25,10 +25,19 @@
         </van-tab>
       </van-tabs>
     </div>
-    <!-- 这里是新闻列表的结构 -->
-    <div class="newList">
-
-    </div>
+    <!-- 这里是上拉的数据正在加载的效果的结果 -->
+    <van-list
+      v-model="cateList.loading"
+      :finished="cateList.finished"
+      finished-text="没有更多的数据了"
+      @load="onLoad"
+      :immediate-check="false"
+      :offset="10"
+    >
+      <!-- <hmarticleblock v-for="item in cate.postList" :key="item.id" :post="item"></hmarticleblock> -->
+      <!-- 这里是新闻列表的结构 -->
+      <div class="newList"></div>
+    </van-list>
   </div>
 </template>
 
@@ -42,13 +51,14 @@ export default {
       id: '',
       active: 1,
       cateList: []
-
     }
   },
   watch: {
     active () {
       console.log(this.active)
-      if (this.cateList[this.active].postList.length === 0) { this.init() }
+      if (this.cateList[this.active].postList.length === 0) {
+        this.init()
+      }
     }
   },
   components: {
@@ -56,7 +66,9 @@ export default {
   },
   async mounted () {
     // 获取用户id
-    this.id = JSON.parse(localStorage.getItem('toutiao_41_userInfo') || '{}').id
+    this.id = JSON.parse(
+      localStorage.getItem('toutiao_41_userInfo') || '{}'
+    ).id
 
     // 获取所有栏目数据
     let res = await getCateList()
@@ -69,7 +81,9 @@ export default {
         ...value, // 这个是展示所有的对象，要拿到这个对象的所有的成员
         postList: [], // 这个是栏目的新闻列表数据
         pageSize: 20, // 这个是栏目每页所显示的记录数
-        pageIndex: 1 // 这个是栏目当前的页码
+        pageIndex: 1, // 这个是栏目当前的页码
+        loading: false, // 这个是发起异步的的时候更的数据
+        finished: false // 这个数据全部已加载完毕了
       }
     })
     console.log(this.cateList)
@@ -89,6 +103,9 @@ export default {
     hmchange (title, nickname) {
       // console.log(title, nickname)
       console.log(this.active)
+    },
+    onLoad () {
+      //
     }
   }
 }

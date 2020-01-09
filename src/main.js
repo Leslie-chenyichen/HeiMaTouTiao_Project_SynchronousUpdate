@@ -3,7 +3,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from '@/router/index.js'
 // 引入全局样式
-import { Button, Toast, Icon, Uploader, Dialog, Field, Picker, Tab, Tabs } from 'vant'
+import { Button, Toast, Icon, Uploader, Dialog, Field, Picker, Tab, Tabs, List } from 'vant'
 Vue.use(Button)
   .use(Toast)
   .use(Icon)
@@ -13,6 +13,7 @@ Vue.use(Button)
   .use(Picker)
   .use(Tab)
   .use(Tabs)
+  .use(List)
 /* 下面的这名话的意思是：阻止启动生产消息，常用作指令。 */
 Vue.config.productionTip = false
 // import '@/styles/reset.css'

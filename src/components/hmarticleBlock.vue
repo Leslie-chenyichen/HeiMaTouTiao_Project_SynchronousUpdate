@@ -35,7 +35,12 @@
 
 <script>
 export default {
-  props: ['post']
+  props: ['post'],
+  methods: {
+    handlerClick (event) {
+      this.$emit('click', event)
+    }
+  }
 }
 </script>
 
