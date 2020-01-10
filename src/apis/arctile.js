@@ -17,3 +17,9 @@ export const likeArticle = (id) => {
     url: `/post_like/${id}`
   })
 }
+// 这个是收藏文章和取消文章
+export const starArticle = (id) => {
+  return axios({
+    url: `/star_like/${id}`
+  })
+}

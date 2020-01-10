@@ -5,7 +5,7 @@
       <input type="text" placeholder="写跟帖" @focus="handlerFocus" />
       <span class="comment">
         <i class="iconfont iconpinglun-"></i>
-        <em>100</em>
+        <em>{{post.comment_length}}</em>
       </span>
       <i class="iconfont iconshoucang"></i>
       <i class="iconfont iconfenxiang"></i>
@@ -21,6 +21,7 @@
 
 <script>
 export default {
+  props: ['post'],
   data () {
     return {
       isFocus: false

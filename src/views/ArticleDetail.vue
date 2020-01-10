@@ -44,7 +44,7 @@
       <div class="more">更多跟帖</div>
     </div>
      <!-- 这里是底部评论区域 -->
-  <hmCommentFooter></hmCommentFooter>
+  <hmCommentFooter :post='article'></hmCommentFooter>
   </div>
 </template>
 

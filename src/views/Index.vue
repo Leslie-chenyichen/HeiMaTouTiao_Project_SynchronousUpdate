@@ -28,7 +28,7 @@
             :immediate-check="false" :offset="10">
             <van-pull-refresh v-model="cate.isLoading" @refresh="onRefresh">
               <!-- 生成当前栏目的文章列表数据 -->
-              <hmarticleblock v-for="item in cate.postList" :key="item.id" :post="item" @click="$router.push({path:`/articleDetail/${item.id}`})"></hmarticleblock>
+              <hmarticleblock v-for="item in cateList[active].postList" :key="item.id" :post="item" @click="$router.push({path:`/articleDetail/${item.id}`})"></hmarticleblock>
             </van-pull-refresh>
           </van-list>
         </van-tab>
@@ -116,8 +116,9 @@ export default {
       let res2 = await getPostList({
         pageSize: this.cateList[this.active].pageSize,
         pageIndex: this.cateList[this.active].pageIndex,
-        crtegory: id
+        category: id
       })
+      console.log(res2)
       if (this.cateList[this.active].loading) {
         this.cateList[this.active].loading = false
       }

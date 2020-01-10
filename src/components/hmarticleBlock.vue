@@ -1,6 +1,6 @@
 <template>
   <!-- 这里是已经做好的左右结构的第一种结构 -->
-  <div class="single" v-if="post.type ===1 && post.cover.length <=2">
+  <div class="single" v-if="post.type ===1 && post.cover.length <=2" @click="handlerClick">
     <div class="left">
       <p class="content">{{post.title}}</p>
       <p class="info">
