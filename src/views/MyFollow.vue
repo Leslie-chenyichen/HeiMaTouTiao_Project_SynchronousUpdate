@@ -10,7 +10,7 @@
                   <p>{{item.nickname}}</p>
                   <span>{{item.create_date}}</span>
               </div>
-              <span>取消关注</span>
+              <span @click="unfollow(item.id)">取消关注</span>
           </div>
       </div>
   </div>
@@ -18,7 +18,7 @@
 
 <script>
 import myheader from '@/components/hmheader.vue'
-import { getUserFollows } from '@/apis/user.js'
+import { getUserFollows, unfollowUser } from '@/apis/user.js'
 export default {
   components: {
     myheader
@@ -35,6 +35,16 @@ export default {
       value.hed_img = 'http://127.0.0.1:3000' + value.head_img
       return value
     })
+  },
+  methods: {
+    async unfollow (id, index) {
+      let res2 = await unfollowUser(id)
+      console.log(res2)
+      if (res2.data.message === '取消关注成功') {
+        this.$toast.success(res2.data.message)
+        this.followList.splice(index, 1)
+      }
+    }
   }
 }
 </script>
