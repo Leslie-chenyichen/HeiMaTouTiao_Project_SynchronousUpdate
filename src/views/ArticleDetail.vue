@@ -73,12 +73,13 @@ export default {
   methods: {
     async followThisUser () {
       let res
-      if (this.article.has_follw) {
+      if (this.article.has_follow) {
         // 取消关注
         res = await unfollowUser(this.article.user.id)
       } else {
         // 关注
         res = await followUser(this.article.user.id)
+        console.log(res)
       }
       // console.log(res)
       // 刷新一下那个关注页面

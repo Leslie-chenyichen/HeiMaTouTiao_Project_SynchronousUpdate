@@ -30,15 +30,21 @@ export const register = (data) => {
     data
   })
 }
-// 5.关注用户,参数是id
+// 5.关注用户
 export const followUser = (id) => {
   return axios({
-    url: `/user_unfollow/${id}`
+    url: `/user_follows/${id}`
   })
 }
 // 取消关注
 export const unfollowUser = (id) => {
   return axios({
     url: `/user_unfollow/${id}`
+  })
+}
+// 用户关注列表区域
+export const getUserFollows = () => {
+  return axios({
+    url: `/user_follows`
   })
 }

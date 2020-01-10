@@ -6,6 +6,7 @@ import EditPersonal from '@/views/EditPersonal.vue'
 import Index from '@/views/Index.vue'
 import Register from '@/views/Register.vue'
 import ArticleDetail from '@/views/ArticleDetail.vue'
+import MyFollow from '@/views/MyFollow.vue'
 // 引入路由所映射的组件
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ let router = new VueRouter({
       name: 'Login',
       path: '/login',
       component: Login
+    },
+    {
+      name: 'MyFollow',
+      path: '/myFollow',
+      component: MyFollow
     },
     {
       name: 'ArticleDetail',

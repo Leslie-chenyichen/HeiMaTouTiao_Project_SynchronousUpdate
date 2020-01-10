@@ -83,7 +83,7 @@ export default {
         isLoading: false // 这个是正在加载中的的
       }
     })
-    console.log(this.cateList)
+    // console.log(this.cateList)
     this.init()
   },
   methods: {
@@ -118,7 +118,7 @@ export default {
         pageIndex: this.cateList[this.active].pageIndex,
         category: id
       })
-      console.log(res2)
+      // console.log(res2)
       if (this.cateList[this.active].loading) {
         this.cateList[this.active].loading = false
       }
