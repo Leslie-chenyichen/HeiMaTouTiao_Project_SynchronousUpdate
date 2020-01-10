@@ -1,3 +1,4 @@
+<!-- 唉，请注意看好了：当前是ArticleDetail.vue---文章详情页面 ，底部点赞评论的功能-->
 <template>
   <div class="articaldetail">
     <div class="header">
@@ -42,12 +43,15 @@
       </div>
       <div class="more">更多跟帖</div>
     </div>
+     <!-- 这里是底部评论区域 -->
+  <hmCommentFooter></hmCommentFooter>
   </div>
 </template>
 
 <script>
 import { getArticleById, likeArticle } from '@/apis/arctile.js'
 import { followUser, unfollowUser } from '@/apis/user.js'
+import hmCommentFooter from '@/components/hmCommentFooter.vue'
 
 export default {
   data () {
@@ -56,6 +60,9 @@ export default {
         user: ''
       }
     }
+  },
+  components: {
+    hmCommentFooter
   },
   async mounted () {
     // 根据id获取文章的详情，实现文章详情的动态渲染
@@ -79,23 +86,12 @@ export default {
       this.$toast.success(res.data.message)
     },
     // 点赞区域
-    // async likeThisArticle () {
-    //   // let res = await likeArticle(this.article.id)
-    //   let res = await likeArticle(this.article.id)
-    //   console.log(res)
-
-    //   // 进行判断
-    //   if (res.user.message === '点赞成功') {
-    //     ++this.article.like_length
-    //   } else {
-    //     --this.article.like_length
-    //   }
-    //   this.article.has_like = !this.article.has_like
-    //   this.$toast.success(res.user.message)
-    // }
     async likeThisArticle () {
+      // let res = await likeArticle(this.article.id)
       let res = await likeArticle(this.article.id)
       console.log(res)
+
+      // 进行判断
       if (res.data.message === '点赞成功') {
         ++this.article.like_length
       } else {
@@ -196,7 +192,7 @@ export default {
 }
 .keeps {
   border-top: 5px solid #ddd;
-  padding: 0 15px;
+  padding: 0 15px 50px;
   > h2 {
     line-height: 50px;
     text-align: center;
