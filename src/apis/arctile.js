@@ -20,6 +20,6 @@ export const likeArticle = (id) => {
 // 这个是收藏文章和取消文章
 export const starArticle = (id) => {
   return axios({
-    url: `/star_like/${id}`
+    url: `/post_star/${id}`
   })
 }

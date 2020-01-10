@@ -1,13 +1,13 @@
 <!-- 唉，请注意看好了：当前是hmCommentFooter.vue 底部评论块结构-->
 <template>
-  <div class="comment">
+  <div class="commentFooter">
     <div class="addcomment" v-show='!isFocus'>
       <input type="text" placeholder="写跟帖" @focus="handlerFocus" />
       <span class="comment">
         <i class="iconfont iconpinglun-"></i>
         <em>{{post.comment_length}}</em>
       </span>
-      <i class="iconfont iconshoucang"></i>
+      <i class="iconfont iconshoucang" :class="{active:post.has_star}" @click="starThisArticle"></i>
       <i class="iconfont iconfenxiang"></i>
     </div>
     <div class="inputcomment" v-show='isFocus'>
@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { starArticle } from '@/apis/arctile.js'
+
 export default {
   props: ['post'],
   data () {
@@ -32,15 +34,21 @@ export default {
     handlerFocus () {
       this.isFocus = !this.isFocus
       this.$refs.commtext.focus()
+    },
+    async starThisArticle () {
+      let res = await starArticle(this.post.id)
+      console.log(res)
+      this.post.has_star = !this.post.has_star
+      this.$toast.success(res.data.message)
     }
   }
 }
 </script>
 
 <style lang='less' scoped>
-.comment{
+.commentFooter{
     width: 100vw;
-    background: #fff;
+    background-color: #fff;
     position: fixed;
     left: 0;
     bottom: 0;
@@ -116,4 +124,7 @@ export default {
     flex: 1;
   }
 }
+.active{
+    color:red;
+  }
 </style>
