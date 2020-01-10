@@ -17,8 +17,8 @@
 
          <video :src="article.content" v-if='article.type===2' controls></video>
       <div class="opt">
-          <!-- 这里是点zan  @click="likeThisArticle"-->
-         <span class="like" :class="{active:article.has_like}" >
+          <!-- 这里是点赞 -->
+         <span class="like" :class="{active:article.has_like}"  @click="likeThisArticle">
           <van-icon name="good-job-o" />{{article.like_length}}
         </span>
         <span class="chat">
@@ -46,8 +46,9 @@
 </template>
 
 <script>
-import { getArticleById } from '@/apis/arctile.js'
+import { getArticleById, likeArticle } from '@/apis/arctile.js'
 import { followUser, unfollowUser } from '@/apis/user.js'
+
 export default {
   data () {
     return {
@@ -59,20 +60,48 @@ export default {
   async mounted () {
     // 根据id获取文章的详情，实现文章详情的动态渲染
     let res = await getArticleById(this.$route.params.id)
-    console.log(res)
+    // console.log(res)
     this.article = res.data.data
   },
   methods: {
     async followThisUser () {
       let res
       if (this.article.has_follw) {
+        // 取消关注
         res = await unfollowUser(this.article.user.id)
       } else {
+        // 关注
         res = await followUser(this.article.user.id)
       }
-      console.log(res)
-      // 刷新一下那个关注
+      // console.log(res)
+      // 刷新一下那个关注页面
       this.article.has_follow = !this.article.has_follow
+      this.$toast.success(res.data.message)
+    },
+    // 点赞区域
+    // async likeThisArticle () {
+    //   // let res = await likeArticle(this.article.id)
+    //   let res = await likeArticle(this.article.id)
+    //   console.log(res)
+
+    //   // 进行判断
+    //   if (res.user.message === '点赞成功') {
+    //     ++this.article.like_length
+    //   } else {
+    //     --this.article.like_length
+    //   }
+    //   this.article.has_like = !this.article.has_like
+    //   this.$toast.success(res.user.message)
+    // }
+    async likeThisArticle () {
+      let res = await likeArticle(this.article.id)
+      console.log(res)
+      if (res.data.message === '点赞成功') {
+        ++this.article.like_length
+      } else {
+        --this.article.like_length
+      }
+      this.article.has_like = !this.article.has_like
       this.$toast.success(res.data.message)
     }
   }

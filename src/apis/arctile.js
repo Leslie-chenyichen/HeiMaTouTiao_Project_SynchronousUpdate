@@ -11,3 +11,9 @@ export const getArticleById = (id) => {
     url: `/post/${id}`
   })
 }
+// 这个是点赞与取消点赞
+export const likeArticle = (id) => {
+  return axios({
+    url: `/post_like/${id}`
+  })
+}
