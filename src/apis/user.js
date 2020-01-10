@@ -48,3 +48,9 @@ export const getUserFollows = () => {
     url: `/user_follows`
   })
 }
+// 用户收藏列表区域
+export const getUserStars = () => {
+  return axios({
+    url: `/user_star`
+  })
+}

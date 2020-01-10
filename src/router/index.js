@@ -7,6 +7,7 @@ import Index from '@/views/Index.vue'
 import Register from '@/views/Register.vue'
 import ArticleDetail from '@/views/ArticleDetail.vue'
 import MyFollow from '@/views/MyFollow.vue'
+import MyStars from '@/views/MyStars.vue'
 // 引入路由所映射的组件
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ let router = new VueRouter({
       name: 'MyFollow',
       path: '/myFollow',
       component: MyFollow
+    },
+    {
+      name: 'MyStars',
+      path: '/myStars',
+      component: MyStars
     },
     {
       name: 'ArticleDetail',
