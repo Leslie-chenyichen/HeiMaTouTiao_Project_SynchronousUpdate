@@ -8,8 +8,8 @@
       <span v-for="(item,index) in cateList" :key="item.id" @click="removeCate(index)">{{item.name}}</span>
     </div>
     <div class="mycate">
-      <p>点击删除频道</p>
-      <span v-for="(item,index) in unaddCateList" :key="item.id" @click="addCate(index)">{{item.name}}</span>
+      <p>点击添加 频道</p>
+      <span v-for="(item,index) in udaddCateList" :key="item.id" @click="addCate(index)">{{item.name}}</span>
     </div>
   </div>
 </template>
@@ -23,7 +23,8 @@ export default {
   },
   data () {
     return {
-      cateList: []
+      cateList: [],
+      udaddCateList: []
     }
   },
   async mounted () {
@@ -35,6 +36,18 @@ export default {
     } else {
       this.cateList = this.cateList.splice(1)
       console.log(this.cateList)
+    }
+  },
+  methods: {
+    removeCate (index) {
+      this.udaddCateList.push(this.cateList[index])
+      this.cateList.splice(index, 1)
+    },
+    // 增加栏目区域
+    addCate (index) {
+      console.log(index)
+      this.cateList.push(this.unaddCateList[index])
+      this.unaddCateList.splice(index, 1)
     }
   }
 }
