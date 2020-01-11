@@ -13,11 +13,13 @@
         <span>搜索你想要的商品</span>
       </div>
       <!-- 用户头像区域 -->
-      <div class="user" @click="$router.push({ path: `/personal/${id}` })">
+       <div class="user" @click="$router.push({path:`/personal/${id}`})">
         <van-icon name="manager-o" />
       </div>
     </div>
-    <!-- 这里是标签页的结构 v-model="active" sticky -->
+    <!-- 右上角加号 -->
+    <span @click="$router.push({name:'CateManager'})" style="font-size:30px">+</span>
+    <!-- 这里是标签页的结构  -->
  <div class="nav">
       <!-- 整个标签页 -->
       <van-tabs v-model="active" sticky swipeable>
@@ -76,7 +78,7 @@ export default {
       return {
         ...value, // 这个是展示所有的对象，要拿到这个对象的所有的成员
         postList: [], // 这个是栏目的新闻列表数据
-        pageSize: 10, // 这个是栏目每页所显示的记录数
+        pageSize: 5, // 这个是栏目每页所显示的记录数
         pageIndex: 1, // 这个是栏目当前的页码
         loading: false, // 这个是发起异步的的时候更的数据
         finished: false, // 这个数据全部已加载完毕了
@@ -164,5 +166,20 @@ export default {
     text-align: center;
     line-height: 40px;
   }
+}
+/deep/.van-sticky{
+  padding-right:50px ;
+    &::after{
+    content:'+';
+    position: absolute;
+    width: 51px;
+    height: 44px;
+    background-color: #fff;
+    top:0;
+    right:0;
+    text-align: center;
+    line-height:42px;
+    font-size: 35px;
+    }
 }
 </style>

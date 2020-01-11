@@ -4,7 +4,7 @@
     <div class="addcomment" v-show='!isFocus'>
       <input type="text" placeholder="写跟帖" @focus="handlerFocus" />
       <span class="comment" @click="$router.push( {path:`/comment/${post.id}`})">
-         <i class="iconfont iconpinglun-"></i>
+          <i class="iconfont iconpinglun-"></i>
         <em>{{post.comment_length}}</em>
       </span>
       <i class="iconfont iconshoucang" :class="{active:post.has_star}" @click="starThisArticle"></i>
@@ -13,15 +13,15 @@
     <div class="inputcomment" v-show='isFocus'>
         <textarea  ref='commtext' rows="5" @blur='isFocus = false'></textarea>
         <div>
-            <span>发送</span>
-            <span>取消</span>
+            <span @click="senComment">发送</span>
+            <span @click="isFocus=false">取消</span>
         </div>
     </div>
   </div>
 </template>
 
 <script>
-import { starArticle } from '@/apis/arctile.js'
+import { starArticle, replyComment } from '@/apis/arctile.js'
 
 export default {
   props: ['post'],
@@ -31,6 +31,22 @@ export default {
     }
   },
   methods: {
+    // 发表评论区域
+    async senComment () {
+      let data = {
+        content: this.$refs.commtext.value
+      }
+      let res = await replyComment(this.post.id, data)
+      console.log(res)
+      if (res.data.message === '评论发布成功') {
+        // 让输入框消失
+        this.isFocus = false
+        // 重置输入框的内容
+        this.$refs.commtext.value = ''
+        // 让评论列表数据刷新--让父组件进行数据的刷新
+        this.$emit('refresh')
+      }
+    },
     //   获取焦点时触发
     handlerFocus () {
       this.isFocus = !this.isFocus

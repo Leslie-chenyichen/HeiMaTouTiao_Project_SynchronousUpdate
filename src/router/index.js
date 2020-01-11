@@ -9,6 +9,7 @@ import ArticleDetail from '@/views/ArticleDetail.vue'
 import MyFollow from '@/views/MyFollow.vue'
 import MyStars from '@/views/MyStars.vue'
 import Comment from '@/views/Comment.vue'
+import CateManager from '@/views/CateManager.vue'
 // 引入路由所映射的组件
 Vue.use(VueRouter)
 
@@ -17,6 +18,7 @@ let router = new VueRouter({
   // 配置路由
   routes: [
     {
+      // 首页的路由
       name: 'Index',
       path: '/',
       component: Index
@@ -35,6 +37,11 @@ let router = new VueRouter({
       name: 'Comment',
       path: '/comment/:id',
       component: Comment
+    },
+    {
+      name: 'CateManager',
+      path: '/cateManager',
+      component: CateManager
     },
     {
       name: 'MyFollow',
