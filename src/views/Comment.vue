@@ -15,19 +15,21 @@
           </div>
           <span>回复</span>
         </div>
+        <!-- 这里会有一个报错，要判断一下到底需不需要生成上一级的结构 -->
+        <commentItem v-if="comment.parent" :parent='comment.parent'></commentItem>
         <div class="text">{{comment.content}}</div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
 // 引入公共单组件hmheader.vue
 import myheader from '@/components/hmheader.vue'
+import commentItem from '@/components/hmCommentltem.vue'
 import { getCommentList } from '@/apis/arctile.js'
 export default {
   components: {
-    myheader
+    myheader, commentItem
   },
   data () {
     return {
@@ -37,7 +39,6 @@ export default {
   async mounted () {
     let res = await getCommentList(this.$route.params.id, { pageSize: 30, pageIndex: 1 })
     this.commentList = res.data.data.length > 0 ? res.data.data : this.commentList
-
     this.commentList = this.commentList.map(value => {
       value.user.head_img = 'http://127.0.0.1:3000' + value.user.head_img
       return value
