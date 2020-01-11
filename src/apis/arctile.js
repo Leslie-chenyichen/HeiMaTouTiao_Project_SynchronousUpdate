@@ -5,21 +5,28 @@ export const getPostList = (params) => {
     params
   })
 }
-// 这个是文章的列表
+// 文章的列表区域
 export const getArticleById = (id) => {
   return axios({
     url: `/post/${id}`
   })
 }
-// 这个是点赞与取消点赞
+// 点赞与取消点赞区域
 export const likeArticle = (id) => {
   return axios({
     url: `/post_like/${id}`
   })
 }
-// 这个是收藏文章和取消文章
+// 收藏文章和取消文章区域
 export const starArticle = (id) => {
   return axios({
     url: `/post_star/${id}`
+  })
+}
+// 获取文章列表
+export const getCommentList = (id, params) => {
+  return axios({
+    url: `/post_comment/${id}`,
+    params
   })
 }

@@ -3,8 +3,8 @@
   <div class="commentFooter">
     <div class="addcomment" v-show='!isFocus'>
       <input type="text" placeholder="写跟帖" @focus="handlerFocus" />
-      <span class="comment">
-        <i class="iconfont iconpinglun-"></i>
+      <span class="comment" @click="$router.push( {path:`/comment/${post.id}`})">
+         <i class="iconfont iconpinglun-"></i>
         <em>{{post.comment_length}}</em>
       </span>
       <i class="iconfont iconshoucang" :class="{active:post.has_star}" @click="starThisArticle"></i>
@@ -14,6 +14,7 @@
         <textarea  ref='commtext' rows="5" @blur='isFocus = false'></textarea>
         <div>
             <span>发送</span>
+            <span>取消</span>
         </div>
     </div>
   </div>

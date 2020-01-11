@@ -8,6 +8,7 @@ import Register from '@/views/Register.vue'
 import ArticleDetail from '@/views/ArticleDetail.vue'
 import MyFollow from '@/views/MyFollow.vue'
 import MyStars from '@/views/MyStars.vue'
+import Comment from '@/views/Comment.vue'
 // 引入路由所映射的组件
 Vue.use(VueRouter)
 
@@ -29,6 +30,11 @@ let router = new VueRouter({
       name: 'Login',
       path: '/login',
       component: Login
+    },
+    {
+      name: 'Comment',
+      path: '/comment/:id',
+      component: Comment
     },
     {
       name: 'MyFollow',
